@@ -3,10 +3,11 @@ kind: Pod
 metadata:
   name: hello-angular
   labels:
-    name: hello-angular
+    app: hello-angular
+    name: hello-message
 spec:
   containers:
-  - name: Hello-docker
+  - name: hello-docker
     image: raviteja01/welcome-app:hello
     resources:
       limits:
