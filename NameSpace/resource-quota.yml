@@ -1,0 +1,18 @@
+# to limit the resources in your namespace , you can create resource-quota defition
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota1
+  namespace: dev
+
+spec:
+  hard:
+    pods: "10" # only 10 pods
+    requests.cpu: "4" # only 4 cpu units
+    requests.memory: 5Gi # only 5Gb memory
+    limits.cpu: "10"
+    limits.memory: 10Gi
+
+
+ # kubectl create -f resource-quota.yml
+ # creates a new resouce-quota for dev namespace   

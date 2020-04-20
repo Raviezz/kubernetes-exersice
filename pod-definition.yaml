@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: hello-angular
+  namespace: dev # by default it get created in default name-space
   labels:
     app: hello-angular
     name: hello-message

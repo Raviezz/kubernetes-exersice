@@ -1,0 +1,43 @@
+# It is almost a ReplicSet execpt the updates happen as Rolling update
+# instead of shutting down all pods to update, shuts down one-by-one pod and creates a updated version
+# We can even rollout to previos version, If new version deployment has a bud in rolling update form 
+apiVersion: apps/v1 
+kind : Deployment # only the kind changes
+metadata: 
+  name: my-replicaset
+  lables:
+    name: my-fronend-app
+    type: frontend
+spec:
+  template:
+    metadata:   # Pod
+      name: hello-angular
+      labels:
+        app: hello-angular
+        name: hello-message
+    spec:   # Pod spec
+      containers:
+      - name: hello-docker
+        image: raviteja01/welcome-app:hello # my angular image , already pushed to Docker hub
+        resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        ports:
+        - containerPort: 80
+  replicas: 3 
+  selector: # 
+    matchLabels:
+      app: hello-angular
+      name: hello-message
+
+
+#Ations Performed:
+ # 1. kubectl create -f <deployment-def.yml>
+       # background mei:
+         # creates a new deployment
+            #kubectl get deployments      
+         # creates a repicaset under deployment 
+            # kubectl get replicasets
+         # creates pod as mentioned in spec< containers
+    

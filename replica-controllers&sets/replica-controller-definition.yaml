@@ -1,0 +1,88 @@
+############ REPLICATION CONTROLLER ##############
+apiVersion: v1
+kind: ReplicationController
+metadata:    # Replication Controller
+  name: my-rc  # identifier name to replica controller
+  labels:
+    name: myfrontend-app
+    type: frontend
+spec:   # Replication spec
+  template:
+    metadata:   # Pod
+      name: hello-angular
+      labels:
+        app: hello-angular
+        name: hello-message
+    spec:   # Pod spec
+      containers:
+      - name: hello-docker
+        image: raviteja01/welcome-app:hello # my angular image , already pushed to Docker hub
+        resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        ports:
+        - containerPort: 80
+  replicas: 3 # replicas tells controller how many pod it should maintain , which is 3 here.
+
+
+# to create a replica controller , use || kubectl create -f <filename.yml>
+# to see all replica controllers , use || kubectl get replicationcontroller
+# to see pods created by replication controller, use || kubectl get pods
+
+
+############# REPLICATION SET###################
+apiVersion: apps/v1
+kind : ReplicaSet
+metadata: 
+  name: my-replicaset
+  lables:
+    name: my-fronend-app
+    type: frontend
+spec:
+  template:
+    metadata:   # Pod
+      name: hello-angular
+      labels:
+        app: hello-angular
+        name: hello-message
+    spec:   # Pod spec
+      containers:
+      - name: hello-docker
+        image: raviteja01/welcome-app:hello # my angular image , already pushed to Docker hub
+        resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        ports:
+        - containerPort: 80
+  replicas: 3 
+  selector: # not required for replication controller/ mandatory for replicaset
+    matchLabels:
+      app: hello-angular
+      name: hello-message
+
+
+# to create a replica set , use || kubectl create -f <filename.yml>
+# to see all replica set , use || kubectl get replicaset
+# to see pods created by replication set, use || kubectl get pods     
+
+# Role of ReplicationController/ReplicaSet is to (process) manage pods and if any of them fail, deploy new ones
+# Replication Controller watches the pod spec mentioned in it 
+# where as replicaset watches the existing pod with the same lables(used as filer,to select) mentioned in it seletor tag.
+
+
+# Scaling ReplicSets
+# change the no of replicas in the definition file
+#   kubectl replace -f <file-name.yml>
+######## OR ##########
+#   kubectl scale --replicas=6 -f <file-name.yml>
+####### OR ###########
+#   kubectl scale --replicas=6 replicaset my-replicaset
+
+
+### DELETE #######
+#  kubectl delete replicaset my-replicaset
+
+
+
