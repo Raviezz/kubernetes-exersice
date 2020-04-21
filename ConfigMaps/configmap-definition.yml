@@ -1,0 +1,26 @@
+################# Imperative #####################################
+# kubectl create configmap <config-name> --from-literal=<key>=<value>
+# ie: kubectl create configmap app-config --from-literal=MYSQL_USERNAME=root \
+#                                          --from-literal=MYSQL_PASSWORD=root
+
+# This is cool , but what if we have too many env vars , cant type all :P
+ # we can even pass a .properties file to our configmap and inject, lets see
+
+ # kubectl create configmap --from-file=<path to app_config.properties>
+
+
+ ############### Declarative #################################
+
+ apiVersion: v1
+ kind: ConfigMap
+ metadata:
+  name: app-config
+data:
+  MYSQL_USERNAME: root
+  MYSQL_PASSWORD: root
+
+  # kubectl create -f configmap-definition.yml
+
+  # to view, use
+  # kubectl get configmaps
+  # kubectl describe configmap app_config -> shows all data related to it

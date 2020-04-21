@@ -1,0 +1,32 @@
+apiVersion: v1    # this is injecting all env vars from a configmap
+kind: Pod
+metadata: 
+  name: mysql-pod
+  labels:
+    type: db
+spec:
+  containers:
+  - name: mysql-image
+    image: mysql:latest
+    envFrom:
+    - configMapRef:
+        name: app-config # name of my configMap reference , injecting here
+
+#################  Single ENV #################################
+apiVersion: v1    # this is injecting only a particular env  from a configmap
+kind: Pod
+metadata: 
+  name: mysql-pod
+  labels:
+    type: db
+spec:
+  containers:
+  - name: mysql-image
+    image: mysql:latest
+    env:
+    - name: MYSQL_USERNAME
+      valueFrom:
+        configMapKeyRef: 
+          name: app-config # name of the config which is already created
+          key: MYSQL_USERNAME # must not neccesarily match with name of env
+
