@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-ubuntu-pod
+  labels:
+    name: ubuntu-sleeper
+spec:
+  containers:
+  - name: ubuntu-image
+    image: ubuntu:latest
+    command: ["/bin/bash","sleep"] # similar to ENTRYPOINT in Dockerfile
+    args: ["10"] # similar to CMD in Dockerfile
+
+
+ # If its in Docker,
+ # docker run --name my-ubuntu-sleeper --entrypoint sleep my-ubuntu-sleeper 10 (almost)   

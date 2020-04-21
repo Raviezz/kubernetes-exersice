@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    name: mysql-pod
+    type: db
+spec:
+  containers: # containers is an array , so we start with hyphen here (-)
+  - name: mysql-image
+    image: mysql
+    env: # similarly env is also an array
+    - name: MYSQL_USERNAME # its a key value pair
+      value: root
+    - name: MYSQL_PASSWORD
+      value: root
+
+
+# we can do it using ConfigMaps& Secrets too , which is more secure      
